@@ -1,0 +1,32 @@
+Debian 9 
+root账户登录
+
+apt-get update && apt-get upgrade -y
+
+apt-get update && apt-get install unzip zip wget curl  mc  nano sudo ufw socat ntp ntpdate gcc git vim socat make build-essential cmake libboost-system-dev libboost-program-options-dev libssl-dev default-libmysqlclient-dev -y
+
+#安装acme
+curl https://get.acme.sh | sh
+source ~/.bashrc
+
+#导入CF的API：
+export CF_Key="d257b1d9e00486c001eedb109849adedc556"
+export CF_Email="32978514@qq.com"
+
+#申请证书
+~/.acme.sh/acme.sh --issue --dns dns_cf -d 域名 -d *.域名 -k ec-256
+  #示例：
+~/.acme.sh/acme.sh --issue --dns dns_cf -d test1223.tk -d *.test1223.tk -k ec-256
+
+#创建一个目录存放证书和KEY：
+mkdir -p /路径/文件夹名
+  #示例
+mkdir -p /root/crtkey
+
+#安装证书
+~/.acme.sh/acme.sh --installcert -d 域名 -d *.域名 --fullchainpath /路径/证书名.crt --keypath /路径/密钥名.key –ecc
+  #示例：
+~/.acme.sh/acme.sh --installcert -d test1223.tk -d *.test1223.tk --fullchainpath /root/crtkey/test1223.tk.crt --keypath /root/crtkey/test1223.tk.key --ecc
+
+#定期自动更新
+acme.sh --upgrade --auto-upgrade
