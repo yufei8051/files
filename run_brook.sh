@@ -1,2 +1,2 @@
 #!/bin/bash
-joker brook server --listen :2334--password 594acbxcbycbMLGB
+joker brook server --listen :4444 --password hello
